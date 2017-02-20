@@ -12,10 +12,11 @@
 void
 InsertionSort::sort(int A[], int size)				// main entry point
 {
+	int comparisons = 0;
   for(int i = 0; i< size; i++)
   {
 	int j = i, temp;
-	while(A[j]<A[j-1])
+	while(comparisons++,A[j]<A[j-1])
 	{
 		temp = A[j-1];
 		A[j-1]=A[j];
@@ -23,4 +24,5 @@ InsertionSort::sort(int A[], int size)				// main entry point
 		j--;
 	}	
   }
+  num_cmps = comparisons;
 }
