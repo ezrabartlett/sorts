@@ -18,11 +18,24 @@ RadixSort::sort(int A[], int size)
   */
 	std::vector<int> bucket[10];
 	bool flag = 1;
-	int key = 10;
+	int key = 10;//Key used to determine which digit to look at.
+	int small = 0;
+	for(int i = 0; i < size; i++)//finds smalles value below zero;
+	{
+		if(A[i]<small){small=A[i];}
+	}
+	if(small<0)//"shift" all numbers in a so that there are no negative numbers
+	{	
+		for(int i = 0; i < size; i++)
+		{
+			A[i]+=abs(small);
+		}
+	}	
 	while(flag)
 	{
 		for(int i = 0; i<size; i++)
 		{
+			
 			bucket[(A[i]%key)/(key/10)].push_back(A[i]);//inserts the element into the correct bucket
 		}
 		int m = 0;
@@ -30,7 +43,7 @@ RadixSort::sort(int A[], int size)
 		if(bucket[0].size()==size){flag = 0;}//if all elements are in bucket zero, the array is sorted
 			//we can break out of the loop in that case.
 		
-		for(int i = 0; i<10; i++)//this for loop unloads the buckets in the correct orde
+		for(int i = 0; i<10; i++)//This nested for loop unloads the buckets in the correct order
 		{
 			for(int j = 0; j<bucket[i].size();j++)
 			{
@@ -39,6 +52,13 @@ RadixSort::sort(int A[], int size)
 			}
 			bucket[i].clear();
 		}
-		key*=10;
-	}  
+		key*=10;//Sets the new key
+	}
+	if(small<0)
+	{
+		for(int i = 0; i < size; i++)//shifts the numbers in the array back to normal
+		{
+			A[i]-=abs(small);
+		}
+	}	
 }
